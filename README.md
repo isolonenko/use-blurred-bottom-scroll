@@ -11,17 +11,19 @@ npm i use-blurred-bottom-scroll
 
 ```typescript
 
-  export const SomeListComponent = (props) => {
-    const { handleScrollNode, blurredElement } = useBlurredBottomScroll();
-    
-    return (
+export const SomeListComponent = props => {
+  const { handleScrollNode, blurredElement } = useBlurredBottomScroll();
+
+  return (
     <div>
       <div ref={handleScrollNode}>
-        {props.listItems.map(item => <p>{item.image}</p>)}
+        {props.listItems.map(item => (
+          <p>{item.image}</p>
+        ))}
       </div>
       {blurredElement}
     </div>
-    )
-  }
+  );
+};
   
 ```
