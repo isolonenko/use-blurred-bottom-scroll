@@ -1,5 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useIsMounted } from "./useIsMounted";
+import React, { useCallback, useEffect, useState, useRef } from "react";
+
+export const useIsMounted = () => {
+  const isMounted = useRef<boolean>(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  return useCallback(() => isMounted.current, []);
+};
 
 interface IBlurredBottomHookProps {
   height?: number;
