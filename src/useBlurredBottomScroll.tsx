@@ -1,18 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
-
-export const useIsMounted = () => {
-  const isMounted = useRef<boolean>(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  return useCallback(() => isMounted.current, []);
-};
+import { useIsMounted } from './useIsMounted';
 
 interface IBlurredBottomHookProps {
   height?: number;
@@ -84,6 +71,7 @@ export const useBlurredBottomScroll = <T extends HTMLElement>(
 
   const blurredElement = (
     <div
+      data-testid="blurred-bottom-element"
       style={{
         position: 'absolute',
         zIndex: '10',
