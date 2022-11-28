@@ -57,7 +57,7 @@ export const useBlurredBottomScroll = <T extends HTMLElement>(
     if (isKeyboardOpened) {
       setIsVisible(false);
     } else {
-      handleVisibility(node);
+      node && handleVisibility(node);
     }
   }, [handleVisibility, node]);
 
@@ -86,17 +86,17 @@ export const useBlurredBottomScroll = <T extends HTMLElement>(
 
   const blurredElement = (
     <div
-      sx={{
-        display: isVisible ? "block" : "none",
+      style={{
         position: "absolute",
         zIndex: "10",
         bottom: 0,
         left: 0,
-        height,
         width: "100%",
         background:
           "linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255, 255, 255, 1) 30%, rgba(255,255,255,0.3) 100%)",
         backdropFilter: "blur(1px)",
+        display: isVisible ? "block" : "none",
+        height,
       }}
     />
   );

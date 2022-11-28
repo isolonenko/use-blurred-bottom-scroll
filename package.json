@@ -1,8 +1,8 @@
 {
   "name": "use-blurred-bottom-scroll",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "",
-  "main": "useBlurredBottomScroll.js",
+  "main": "src/useBlurredBottomScroll.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,6 +26,8 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
+    "@types/react": "^18.0.25",
+    "prettier": "^2.8.0",
     "typescript": "^4.9.3"
   }
 }
