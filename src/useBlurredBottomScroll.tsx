@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 
 export const useIsMounted = () => {
   const isMounted = useRef<boolean>(false);
@@ -22,20 +22,16 @@ interface IBlurredBottomHookResult<T> {
   handleScrollNode: (node: T) => void;
 }
 export const useBlurredBottomScroll = <T extends HTMLElement>(
-  options?: IBlurredBottomHookProps
+  options?: IBlurredBottomHookProps,
 ): IBlurredBottomHookResult<T> => {
   const isMounted = useIsMounted();
   const { height = 80 } = options || {};
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [node, setNode] = useState<T>();
+  const [nodeState, setNode] = useState<T>();
 
   const handleVisibility = useCallback(
-    (node: T) =>
-      isMounted() &&
-      setIsVisible(
-        Math.ceil(node.scrollTop + node.clientHeight) < node.scrollHeight
-      ),
-    [isMounted]
+    (node: T) => isMounted() && setIsVisible(Math.ceil(node.scrollTop + node.clientHeight) < node.scrollHeight),
+    [isMounted],
   );
 
   const onScroll = useCallback(
@@ -48,7 +44,7 @@ export const useBlurredBottomScroll = <T extends HTMLElement>(
 
       handleVisibility(target);
     },
-    [handleVisibility]
+    [handleVisibility],
   );
 
   const onResize = useCallback(() => {
@@ -57,9 +53,11 @@ export const useBlurredBottomScroll = <T extends HTMLElement>(
     if (isKeyboardOpened) {
       setIsVisible(false);
     } else {
-      node && handleVisibility(node);
+      if (nodeState) {
+        handleVisibility(nodeState);
+      }
     }
-  }, [handleVisibility, node]);
+  }, [handleVisibility, nodeState]);
 
   const handleScrollNode = useCallback((node: T) => {
     if (!node) {
@@ -70,32 +68,32 @@ export const useBlurredBottomScroll = <T extends HTMLElement>(
   }, []);
 
   useEffect(() => {
-    if (!node) {
+    if (!nodeState) {
       return;
     }
 
-    handleVisibility(node);
-    window.addEventListener("resize", onResize);
-    node.addEventListener("scroll", onScroll);
+    handleVisibility(nodeState);
+    window.addEventListener('resize', onResize);
+    nodeState.addEventListener('scroll', onScroll);
 
     return () => {
-      window.removeEventListener("resize", onResize);
-      node && node.removeEventListener("scroll", onScroll);
+      window.removeEventListener('resize', onResize);
+      nodeState.removeEventListener('scroll', onScroll);
     };
-  }, [handleVisibility, node, onResize, onScroll]);
+  }, [handleVisibility, nodeState, onResize, onScroll]);
 
   const blurredElement = (
     <div
       style={{
-        position: "absolute",
-        zIndex: "10",
+        position: 'absolute',
+        zIndex: '10',
         bottom: 0,
         left: 0,
-        width: "100%",
+        width: '100%',
         background:
-          "linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255, 255, 255, 1) 30%, rgba(255,255,255,0.3) 100%)",
-        backdropFilter: "blur(1px)",
-        display: isVisible ? "block" : "none",
+          'linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255, 255, 255, 1) 30%, rgba(255,255,255,0.3) 100%)',
+        backdropFilter: 'blur(1px)',
+        display: isVisible ? 'block' : 'none',
         height,
       }}
     />

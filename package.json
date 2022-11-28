@@ -1,11 +1,21 @@
 {
   "name": "use-blurred-bottom-scroll",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
-  "main": "src/useBlurredBottomScroll.js",
+  "main": "dist/useBlurredBottomScroll.js",
+  "types": "dist/useBlurredBottomScroll.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
+  "files": ["dist/**/*"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/isolonenko/use-blurred-bottom-scroll.git"
@@ -28,6 +38,8 @@
   "devDependencies": {
     "@types/react": "^18.0.25",
     "prettier": "^2.8.0",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.9.3"
   }
 }
